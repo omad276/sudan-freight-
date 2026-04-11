@@ -1,0 +1,36 @@
+{
+  "name": "واصل - Wassel",
+  "short_name": "واصل",
+  "description": "منصة الشحن الرائدة في السودان - نربط أصحاب البضائع بالناقلين الموثوقين",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#1E3A8A",
+  "background_color": "#FFFFFF",
+  "lang": "ar",
+  "dir": "rtl",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "طلبات الشحن",
+      "short_name": "شحن",
+      "description": "عرض طلبات الشحن",
+      "url": "/shipper/shipments",
+      "icons": [{ "src": "/icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "رحلات النقل",
+      "short_name": "رحلات",
+      "description": "عرض الرحلات المتاحة",
+      "url": "/carrier/trips",
+      "icons": [{ "src": "/icon.svg", "sizes": "any" }]
+    }
+  ]
+}
