@@ -95,41 +95,41 @@ export function Header({ showAuthButtons = true }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 bg-white w-full overflow-x-hidden border-b">
+      <div className="flex flex-wrap justify-between items-center gap-2 px-3 py-2">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-            <Truck className="h-6 w-6 text-white" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+            <Truck className="h-5 w-5 text-white" />
           </div>
           <span className="text-xl font-bold text-primary">{t('appName')}</span>
         </Link>
 
         {/* Actions */}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-2">
           <LanguageToggle />
 
           {showAuthButtons && !loading && (
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap gap-2">
               {userRole ? (
                 <>
-                  <Button variant="default" asChild>
+                  <Button variant="default" size="sm" asChild>
                     <Link href={getDashboardLink()}>
-                      <LayoutDashboard className="h-4 w-4 ml-2" />
+                      <LayoutDashboard className="h-4 w-4 ml-1" />
                       {t('dashboard')}
                     </Link>
                   </Button>
-                  <Button variant="outline" onClick={handleSignOut}>
-                    <LogOut className="h-4 w-4 ml-2" />
+                  <Button variant="outline" size="sm" onClick={handleSignOut}>
+                    <LogOut className="h-4 w-4 ml-1" />
                     {t('signOut')}
                   </Button>
                 </>
               ) : (
                 <>
-                  <Button variant="ghost" asChild>
+                  <Button variant="ghost" size="sm" asChild>
                     <Link href="/login">{t('login')}</Link>
                   </Button>
-                  <Button asChild>
+                  <Button size="sm" asChild>
                     <Link href="/register">{t('register')}</Link>
                   </Button>
                 </>

@@ -119,6 +119,12 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  html, body {
+    overflow-x: hidden !important;
+    width: 100%;
   }
   body {
     @apply bg-background text-foreground;
