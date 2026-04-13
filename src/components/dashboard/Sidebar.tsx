@@ -102,14 +102,14 @@ export function Sidebar({ role, className }: SidebarProps) {
               key={link.href}
               href={link.href}
               className={cn(
-                'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                'flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all',
                 isActive
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
               )}
             >
-              <link.icon className="h-5 w-5" />
-              {t(link.label as any)}
+              <link.icon className="w-5 h-5" />
+              <span>{t(link.label as any)}</span>
             </Link>
           );
         })}
