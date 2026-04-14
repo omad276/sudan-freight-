@@ -100,19 +100,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await Promise.all(keys.map(key => caches.delete(key)));
       }
 
-      // Unregister service worker
+      // Unregister all service workers
       if ('serviceWorker' in navigator) {
-        const registration = await navigator.serviceWorker.getRegistration();
-        if (registration) {
-          await registration.unregister();
-        }
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(registrations.map(r => r.unregister()));
       }
 
-      // Force hard redirect to login page
-      window.location.replace('/login');
+      // Clear localStorage and sessionStorage
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // Force redirect to login
+      window.location.href = '/login';
     } catch (err) {
       console.error('Logout failed:', err);
-      window.location.replace('/login');
+      // Force redirect even on error
+      window.location.href = '/login';
     }
   };
 

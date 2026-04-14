@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wassel-v1';
+const CACHE_NAME = 'wassel-v3';
 const urlsToCache = [
   '/',
   '/manifest.json',
