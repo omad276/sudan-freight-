@@ -161,7 +161,7 @@ export default function BrowsePage() {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="hidden">
+            <TabsList className="hidden" />
 
             {loading ? (
               <LoadingSpinner className="py-12" />
