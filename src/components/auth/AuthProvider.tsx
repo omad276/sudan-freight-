@@ -88,34 +88,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signOut = async () => {
+    // Immediately start redirect - don't wait for async operations
+    const doRedirect = () => {
+      window.location.href = '/login';
+    };
+
     try {
       // Sign out from Supabase
-      await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut();
+      if (error) console.error('Supabase signOut error:', error);
+
       setUser(null);
       setProfile(null);
 
-      // Clear all browser caches
+      // Clear localStorage and sessionStorage first (sync)
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+      } catch (e) {
+        console.error('Storage clear error:', e);
+      }
+
+      // Clear caches (async but don't block)
       if ('caches' in window) {
-        const keys = await caches.keys();
-        await Promise.all(keys.map(key => caches.delete(key)));
+        caches.keys().then(keys => {
+          Promise.all(keys.map(key => caches.delete(key)));
+        }).catch(() => {});
       }
 
-      // Unregister all service workers
+      // Unregister service workers (async but don't block)
       if ('serviceWorker' in navigator) {
-        const registrations = await navigator.serviceWorker.getRegistrations();
-        await Promise.all(registrations.map(r => r.unregister()));
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          registrations.forEach(r => r.unregister());
+        }).catch(() => {});
       }
 
-      // Clear localStorage and sessionStorage
-      localStorage.clear();
-      sessionStorage.clear();
-
-      // Force redirect to login
-      window.location.href = '/login';
+      // Force redirect after small delay to ensure state updates
+      setTimeout(doRedirect, 100);
     } catch (err) {
       console.error('Logout failed:', err);
       // Force redirect even on error
-      window.location.href = '/login';
+      doRedirect();
     }
   };
 
