@@ -67,45 +67,14 @@ export function Header({ showAuthButtons = true }: HeaderProps) {
   };
 
   const handleSignOut = async () => {
-    // Define redirect function
-    const doRedirect = () => {
-      window.location.href = '/login';
-    };
-
     try {
       const supabase = createBrowserClient();
-      const { error } = await supabase.auth.signOut();
-      if (error) console.error('Supabase signOut error:', error);
-
-      setUserRole(null);
-
-      // Clear storage (sync)
-      try {
-        localStorage.clear();
-        sessionStorage.clear();
-      } catch (e) {
-        console.error('Storage clear error:', e);
-      }
-
-      // Clear caches (async, non-blocking)
-      if ('caches' in window) {
-        caches.keys().then(keys => {
-          Promise.all(keys.map(key => caches.delete(key)));
-        }).catch(() => {});
-      }
-
-      // Unregister service workers (async, non-blocking)
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(registrations => {
-          registrations.forEach(r => r.unregister());
-        }).catch(() => {});
-      }
-
-      // Force redirect after small delay
-      setTimeout(doRedirect, 100);
-    } catch (err) {
-      console.error('Logout failed:', err);
-      doRedirect();
+      await supabase.auth.signOut();
+      // Force a hard redirect and clear the session
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Logout error:', error);
+      window.location.href = '/login';
     }
   };
 
