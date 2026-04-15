@@ -60,17 +60,8 @@ export function RegisterForm() {
       if (signUpError) throw signUpError;
 
       if (data.user) {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert({
-            id: data.user.id,
-            email: data.user.email,
-            name: 'User',
-            role: 'shipper'
-          });
-
-        if (profileError) throw profileError;
-
+        // Profile is created automatically by database trigger (on_auth_user_created)
+        // Proceed to profile completion step
         setStep('profile');
       }
     } catch (err: any) {
